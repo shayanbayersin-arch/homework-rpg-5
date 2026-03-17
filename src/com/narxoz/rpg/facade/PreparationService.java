@@ -9,6 +9,6 @@ public class PreparationService {
         if (hero == null || boss == null || action == null) {
             return "TODO: invalid preparation state";
         }
-        return "TODO: preparation complete";
+        return "preparation complete";
     }
 }
