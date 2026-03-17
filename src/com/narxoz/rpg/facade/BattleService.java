@@ -3,6 +3,8 @@ package com.narxoz.rpg.facade;
 import com.narxoz.rpg.decorator.AttackAction;
 import com.narxoz.rpg.enemy.BossEnemy;
 import com.narxoz.rpg.hero.HeroProfile;
+import com.narxoz.rpg.adapter.*;
+import com.narxoz.rpg.singleton.GameConfig;
 
 import java.util.Random;
 
@@ -15,23 +17,34 @@ public class BattleService {
     }
 
     public AdventureResult battle(HeroProfile hero, BossEnemy boss, AttackAction action) {
-        // TODO: Implement the battle flow.
-        // Questions to answer:
-        // - Who attacks first?
-        // - How many rounds are allowed?
-        // - How is damage resolved?
-        // - How will randomness affect the result, if at all?
-        AdventureResult result = new AdventureResult();
-        result.setWinner("TODO");
-        result.setRounds(0);
-        result.setReward("TODO");
-        result.addLine("TODO: implement battle logic");
 
-        // Keep the field in use so students can decide whether to rely on it.
-        if (random.nextInt(1) == 0) {
-            // TODO: Replace placeholder branch with real deterministic or random logic.
-        }
+    AdventureResult result = new AdventureResult();
 
-        return result;
+    Combatant heroC = new HeroAdapter(hero);
+    Combatant bossC = new EnemyAdapter(boss);
+
+    int rounds = 0;
+
+    int maxRounds = GameConfig.getInstance().getMaxRounds();
+
+    while (heroC.isAlive() && bossC.isAlive() && rounds < maxRounds) {
+
+        rounds++;
+
+        int dmg = action.getDamage();
+        bossC.takeDamage(dmg);
+        result.addLine(heroC.getName() + " deals " + dmg);
+
+        if (!bossC.isAlive()) break;
+
+        int bossDmg = bossC.getAttackPower();
+        heroC.takeDamage(bossDmg);
+        result.addLine(bossC.getName() + " deals " + bossDmg);
+    }
+
+    result.setRounds(rounds);
+    result.setWinner(heroC.isAlive() ? "Hero" : "Boss");
+
+    return result;
     }
 }
