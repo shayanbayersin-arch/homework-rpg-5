@@ -11,11 +11,11 @@ public class Main {
 
         System.out.println("=== Homework 5 Demo: Decorator + Facade ===");
 
-        // --- 1. Создаем героя и босса ---
+        
         HeroProfile hero = new HeroProfile("Knight", 100);
         BossEnemy boss = new BossEnemy("Dragon", 80, 15);
 
-        // --- 2. Базовая атака ---
+       
         AttackAction baseAttack = new BasicAttack();
 
         System.out.println("\n--- Decorator Preview ---");
@@ -23,7 +23,7 @@ public class Main {
         System.out.println("Base damage: " + baseAttack.getDamage());
         System.out.println("Base effects: " + baseAttack.getEffectSummary());
 
-        // --- 3. Декораторы (stack) ---
+      
         AttackAction enhancedAttack =
                 new FireRuneDecorator(
                 new PoisonCoatingDecorator(
@@ -33,14 +33,12 @@ public class Main {
         System.out.println("Enhanced damage: " + enhancedAttack.getDamage());
         System.out.println("Enhanced effects: " + enhancedAttack.getEffectSummary());
 
-        // --- 4. Facade (вот сюда относится твой код) ---
         System.out.println("\n--- Facade Preview ---");
 
         DungeonFacade facade = new DungeonFacade();
 
         AdventureResult result = facade.runAdventure(hero, boss, enhancedAttack);
 
-        // --- 5. Вывод результата ---
         System.out.println("Winner: " + result.getWinner());
         System.out.println("Rounds: " + result.getRounds());
         System.out.println("Reward: " + result.getReward());
