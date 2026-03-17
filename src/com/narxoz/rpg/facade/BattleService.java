@@ -31,13 +31,13 @@ public class BattleService {
 
         rounds++;
 
-        int dmg = action.getDamage();
+        int dmg = action.getDamage() + random.nextInt(5);
         bossC.takeDamage(dmg);
         result.addLine(heroC.getName() + " deals " + dmg);
 
         if (!bossC.isAlive()) break;
 
-        int bossDmg = bossC.getAttackPower();
+        int bossDmg = bossC.getAttackPower() + random.nextInt(5);
         heroC.takeDamage(bossDmg);
         result.addLine(bossC.getName() + " deals " + bossDmg);
     }
