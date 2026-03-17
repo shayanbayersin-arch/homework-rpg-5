@@ -1,5 +1,5 @@
 package com.narxoz.rpg.composite;
 
-public class PartyComposite {
+public class UnitLeaf {
     
 }
